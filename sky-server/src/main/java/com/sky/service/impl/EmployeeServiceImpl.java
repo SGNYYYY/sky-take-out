@@ -12,7 +12,6 @@ import com.sky.dto.EmployeePageQueryDTO;
 import com.sky.entity.Employee;
 import com.sky.exception.AccountLockedException;
 import com.sky.exception.AccountNotFoundException;
-import com.sky.exception.BaseException;
 import com.sky.exception.PasswordErrorException;
 import com.sky.mapper.EmployeeMapper;
 import com.sky.result.PageResult;
@@ -21,10 +20,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.security.auth.login.AccountException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -97,7 +95,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     /**
      * 员工分页查询
      * @param employeePageQueryDTO
-     * @return
+     * @return 分页查询结果
      */
     public PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO){
         //本质是数据库的分页查询 select * from employee limit 0,10
@@ -121,6 +119,29 @@ public class EmployeeServiceImpl implements EmployeeService {
                                 .updateTime(LocalDateTime.now())
                                 .updateUser(BaseContext.getCurrentId())
                                 .build();
+        employeeMapper.update(employee);
+    }
+
+    /**
+     * 根据id查询员工
+     * @param id
+     * @return 员工信息
+     */
+    public Employee findById(Long id) {
+        Employee employee = employeeMapper.getById(id);
+        employee.setPassword("****");
+        return employee;
+    }
+
+    /**
+     * 编辑员工信息
+     * @param employeeDTO
+     */
+    public void updateEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        Employee employee = new Employee();
+        BeanUtils.copyProperties(employeeDTO, employee);
+        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(BaseContext.getCurrentId());
         employeeMapper.update(employee);
     }
 
