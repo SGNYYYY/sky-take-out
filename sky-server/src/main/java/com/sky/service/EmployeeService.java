@@ -6,8 +6,6 @@ import com.sky.dto.EmployeePageQueryDTO;
 import com.sky.entity.Employee;
 import com.sky.result.PageResult;
 
-import java.util.List;
-
 public interface EmployeeService {
 
     /**
@@ -30,5 +28,12 @@ public interface EmployeeService {
      * @return
      */
     PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO);
+
+    /**
+     * 启用、禁用员工状态
+     * @param status
+     * @param id
+     */
+    void changeStatus(Integer status, Long id);
 
 }

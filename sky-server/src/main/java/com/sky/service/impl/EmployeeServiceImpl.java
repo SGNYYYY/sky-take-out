@@ -94,6 +94,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeMapper.insert(employee);
     }
 
+    /**
+     * 员工分页查询
+     * @param employeePageQueryDTO
+     * @return
+     */
     public PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO){
         //本质是数据库的分页查询 select * from employee limit 0,10
         PageHelper.startPage(employeePageQueryDTO.getPage(), employeePageQueryDTO.getPageSize());
@@ -102,6 +107,21 @@ public class EmployeeServiceImpl implements EmployeeService {
         long total = page.getTotal();
         List<Employee> employees = page.getResult();
         return new PageResult(total, employees);
+    }
+
+    /**
+     * 启用、禁用员工状态
+     * @param status
+     * @param id
+     */
+    public void changeStatus(Integer status, Long id) {
+        Employee employee = Employee.builder()
+                                .id(id)
+                                .status(status)
+                                .updateTime(LocalDateTime.now())
+                                .updateUser(BaseContext.getCurrentId())
+                                .build();
+        employeeMapper.update(employee);
     }
 
 }
