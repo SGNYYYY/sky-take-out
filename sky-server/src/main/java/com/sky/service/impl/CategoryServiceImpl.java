@@ -97,10 +97,12 @@ public class CategoryServiceImpl implements CategoryService {
      * @param id
      */
     public void delete(Long id) {
-        if(dishMapper.getByCategoryId(id) != null){
+        Integer count = dishMapper.countByCategoryId(id);
+        if(count > 0){
             throw new DeletionNotAllowedException(MessageConstant.CATEGORY_BE_RELATED_BY_DISH);
         }
-        if(setmealMapper.getByCategoryId(id) != null) {
+        count = setmealMapper.countByCategoryId(id);
+        if(count > 0) {
             throw new DeletionNotAllowedException(MessageConstant.CATEGORY_BE_RELATED_BY_SETMEAL);
         }
         categoryMapper.delete(id);
