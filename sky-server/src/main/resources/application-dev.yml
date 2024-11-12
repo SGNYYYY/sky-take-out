@@ -6,3 +6,8 @@ sky:
     database: sky_take_out
     username: root
     password: sgny0128@
+  alioss:
+    endpoint: oss-cn-guangzhou.aliyuncs.com
+    access-key-id: LTAI5tF8g8VTyWdXRj7X9nfE
+    access-key-secret: qFfiGOg8LP1FZ52ADpPGT89x3l7F1h
+    bucket-name: shgny
