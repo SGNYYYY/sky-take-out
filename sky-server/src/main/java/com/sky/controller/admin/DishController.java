@@ -67,4 +67,16 @@ public class DishController {
     public Result<List<Dish>> getByCategoryId(Long categoryId) {
         return null;
     }
+
+    /**
+     * 批量删除菜品
+     * @param ids
+     * @return
+     */
+    @DeleteMapping
+    @ApiOperation("批量删除菜品")
+    public Result delete(@RequestParam List<Long> ids){
+        dishService.delete(ids);
+        return Result.success();
+    }
 }
