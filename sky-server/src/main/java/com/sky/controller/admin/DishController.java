@@ -53,8 +53,9 @@ public class DishController {
      */
     @GetMapping("/{id}")
     @ApiOperation("根据id查询菜品")
-    public Result<List<DishVO>> getById(@PathVariable Long id) {
-        return null;
+    public Result<DishVO> getById(@PathVariable Long id) {
+        DishVO dishVO = dishService.getById(id);
+        return Result.success(dishVO);
     }
 
     /**
@@ -77,6 +78,13 @@ public class DishController {
     @ApiOperation("批量删除菜品")
     public Result delete(@RequestParam List<Long> ids){
         dishService.delete(ids);
+        return Result.success();
+    }
+
+    @PutMapping
+    @ApiOperation("修改菜品")
+    public Result update(@RequestBody DishDTO dishDTO) {
+        dishService.update(dishDTO);
         return Result.success();
     }
 }
