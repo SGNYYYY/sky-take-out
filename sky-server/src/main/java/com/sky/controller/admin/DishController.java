@@ -64,7 +64,7 @@ public class DishController {
      * @return
      */
     @GetMapping("/list")
-    @ApiOperation("根据categoryId查询菜品")
+    @ApiOperation("根据分类id查询菜品")
     public Result<List<Dish>> getByCategoryId(Long categoryId) {
         List<Dish> dishList = dishService.getByCategoryId(categoryId);
         return Result.success(dishList);
@@ -86,6 +86,13 @@ public class DishController {
     @ApiOperation("修改菜品")
     public Result update(@RequestBody DishDTO dishDTO) {
         dishService.update(dishDTO);
+        return Result.success();
+    }
+
+    @PostMapping("/status/{status}")
+    @ApiOperation("菜品起售、停售")
+    public Result updateStatus(@PathVariable Integer status, Long id) {
+        dishService.updateStatus(status, id);
         return Result.success();
     }
 }
