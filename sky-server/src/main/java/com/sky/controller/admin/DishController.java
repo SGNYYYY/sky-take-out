@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@RestController("adminDishController")
 @RequestMapping("/admin/dish")
 @Slf4j
 @Api(tags="菜品相关接口")
@@ -42,6 +42,7 @@ public class DishController {
     @GetMapping("/page")
     @ApiOperation("菜品分页查询")
     public Result<PageResult> pageQuery(DishPageQueryDTO dishPageQueryDTO) {
+        log.info("分页查询"+dishPageQueryDTO);
         PageResult pageResult = dishService.pageQuery(dishPageQueryDTO);
         return Result.success(pageResult);
     }

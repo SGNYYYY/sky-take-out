@@ -15,6 +15,7 @@ import com.sky.mapper.*;
 import com.sky.result.PageResult;
 import com.sky.service.DishService;
 import com.sky.vo.DishVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 @Service
+@Slf4j
 public class DishServiceImpl implements DishService {
 
     @Autowired
@@ -173,5 +175,25 @@ public class DishServiceImpl implements DishService {
                 }
             }
         }
+    }
+
+    /**
+     * 条件查询菜品和口味
+     *
+     * @param dish
+     * @return
+     */
+    public List<DishVO> listWithFlavors(Dish dish) {
+        List<Dish> dishes = dishMapper.getByCategoryId(dish.getCategoryId());
+        String categoryName = categoryMapper.getCategoryNameById(dish.getCategoryId());
+        List<DishVO> dishVOs = new ArrayList<>();
+        for(Dish item : dishes){
+            DishVO dishVO = new DishVO();
+            BeanUtils.copyProperties(item,dishVO);
+            dishVO.setCategoryName(categoryName);
+            dishVO.setFlavors(dishFlavorMapper.getByDishId(item.getId()));
+            dishVOs.add(dishVO);
+        }
+        return dishVOs;
     }
 }
