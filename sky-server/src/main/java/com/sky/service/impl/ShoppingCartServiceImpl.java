@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -43,7 +44,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         //如果存在，数量+1
         if(shoppingCartList != null && shoppingCartList.size() > 0) {
             ShoppingCart shoppingCart1 = shoppingCartList.get(0);
-            shoppingCart1.setNumber(shoppingCart.getNumber() + 1);  // update shopping_cart set number = ? where id = ?
+            shoppingCart1.setNumber(shoppingCart1.getNumber() + 1);  // update shopping_cart set number = ? where id = ?
             shoppingCartMapper.updateNumberById(shoppingCart1);
         }else {
             //如果不存在，插入一条购物车数据
@@ -66,4 +67,45 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             shoppingCartMapper.insert(shoppingCart);
         }
     }
+
+    /**
+     * 删除购物车的一个商品
+     *
+     * @param shoppingCartDTO
+     */
+    public void subShoppingCart(ShoppingCartDTO shoppingCartDTO) {
+        ShoppingCart shoppingCart = new ShoppingCart();
+        BeanUtils.copyProperties(shoppingCartDTO, shoppingCart);
+        shoppingCart.setUserId(BaseContext.getCurrentId());
+        List<ShoppingCart> shoppingCartList = shoppingCartMapper.list(shoppingCart);
+
+        ShoppingCart shoppingCart1 = shoppingCartList.get(0);
+        if(shoppingCart1.getNumber() == 1){
+            shoppingCartMapper.deleteById(shoppingCart1.getId());
+        }else{
+            shoppingCart1.setNumber(shoppingCart1.getNumber() - 1);
+            shoppingCartMapper.updateNumberById(shoppingCart1);
+        }
+    }
+
+    /**
+     * 查看购物车
+     *
+     * @return
+     */
+    public List<ShoppingCart> list() {
+        ShoppingCart shoppingCart = new ShoppingCart();
+        shoppingCart.setUserId(BaseContext.getCurrentId());
+        return shoppingCartMapper.list(shoppingCart);
+    }
+
+    /**
+     * 清空购物车
+     */
+    public void clean() {
+        Long UserId = BaseContext.getCurrentId();
+        shoppingCartMapper.deleteByUserId(UserId);
+    }
+
+
 }
