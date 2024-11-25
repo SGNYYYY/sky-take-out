@@ -61,8 +61,7 @@ public class AddressBookServiceImpl implements AddressBookService {
      * @return
      */
     public AddressBook getById(Long id) {
-        AddressBook addressBook = AddressBook.builder().id(id).build();
-        return addressBookMapper.select(addressBook).get(0);
+        return addressBookMapper.getById(id);
     }
 
     /**

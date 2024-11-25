@@ -1,10 +1,7 @@
 package com.sky.mapper;
 
 import com.sky.entity.AddressBook;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -28,6 +25,13 @@ public interface AddressBookMapper {
      * @return
      */
     List<AddressBook> select(AddressBook addressBook);
+
+    /**
+     * 根据id查询地址
+     * @param id
+     */
+    @Select("select * from address_book where id = #{id}")
+    AddressBook getById(Long id);
 
     /**
      * 将当前用户的所有地址修改为非默认地址
