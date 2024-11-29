@@ -11,4 +11,12 @@
             <if test="dishFlavor != null"> and dish_flavor = #{dishFlavor} </if>
         </where>
     </select>
+
+    <insert id="insertBatch">
+        insert into shopping_cart (name, image, user_id, dish_id, setmeal_id, dish_flavor, number, amount, create_time)
+        values
+            <foreach collection="shoppingCartList" item="cart" separator=",">
+                (#{cart.name}, #{cart.image}, #{cart.userId}, #{cart.dishId}, #{cart.setmealId}, #{cart.dishFlavor}, #{cart.number}, #{cart.amount}, #{cart.createTime})
+            </foreach>
+    </insert>
 </mapper>
