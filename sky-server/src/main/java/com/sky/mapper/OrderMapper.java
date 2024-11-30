@@ -35,4 +35,12 @@ public interface OrderMapper {
      */
     void update(Orders order);
 
+    /**
+     * 各个状态的订单数量统计
+     * @param status
+     * @return
+     */
+    @Select("select count(*) from orders where status = #{status}")
+    Integer statistic(Integer status);
+
 }
