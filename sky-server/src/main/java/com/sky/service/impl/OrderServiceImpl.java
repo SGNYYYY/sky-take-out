@@ -18,6 +18,7 @@ import com.sky.mapper.OrderMapper;
 import com.sky.mapper.ShoppingCartMapper;
 import com.sky.result.PageResult;
 import com.sky.service.OrderService;
+import com.sky.utils.BaiduUtil;
 import com.sky.vo.OrderStatisticsVO;
 import com.sky.vo.OrderSubmitVO;
 import com.sky.vo.OrderVO;
@@ -44,6 +45,9 @@ public class OrderServiceImpl implements OrderService {
     private OrderMapper orderMapper;
     @Autowired
     private OrderDetailMapper orderDetailMapper;
+    @Autowired
+    private BaiduUtil baiduUtil;
+
 
     /**
      * 用户下单
@@ -60,6 +64,12 @@ public class OrderServiceImpl implements OrderService {
         if(addressBook == null){
             throw new AddressBookBusinessException(MessageConstant.ADDRESS_BOOK_IS_NULL);
         }
+        String address = addressBook.getProvinceName()+addressBook.getCityName()+addressBook.getDistrictName()+addressBook.getDetail();
+        Integer distance = Integer.valueOf(baiduUtil.getDistance(address));
+        if(distance > 5000){
+            throw new OrderBusinessException(MessageConstant.ADDRESS_BOOK_CAN_NOT_DELIVERY);
+        }
+
             //2购物车为空
         ShoppingCart shoppingCart = new ShoppingCart();
         Long userId = BaseContext.getCurrentId();

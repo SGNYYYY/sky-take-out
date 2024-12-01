@@ -16,6 +16,7 @@ public class MessageConstant {
     public static final String SHOPPING_CART_IS_NULL = "购物车数据为空，不能下单";
     public static final String DEFAULT_ADDRESS_NOT_FOUND = "没有查询到默认地址";
     public static final String ADDRESS_BOOK_IS_NULL = "用户地址为空，不能下单";
+    public static final String ADDRESS_BOOK_CAN_NOT_DELIVERY = "用户选择地址超出配送范围";
     public static final String LOGIN_FAILED = "登录失败";
     public static final String UPLOAD_FAILED = "文件上传失败";
     public static final String SETMEAL_ENABLE_FAILED = "套餐内包含未启售菜品，无法启售";
