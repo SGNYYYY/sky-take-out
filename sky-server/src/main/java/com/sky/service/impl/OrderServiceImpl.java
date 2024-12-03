@@ -428,4 +428,25 @@ public class OrderServiceImpl implements OrderService {
         order.setDeliveryTime(LocalDateTime.now());
         orderMapper.update(order);
     }
+
+    /**
+     * 客户催单
+     * @param id
+     */
+    public void reminder(Long id) {
+        Orders order = orderMapper.getById(id);
+
+        if(order == null) {
+            throw new OrderBusinessException(MessageConstant.ORDER_NOT_FOUND);
+        }
+
+        // 通过websocket向客户端浏览器推送消息
+        Map map = new HashMap();
+        map.put("type", 2); // 1表示来单提醒，2表示客户催单
+        map.put("orderId", order.getId());
+        map.put("content", order.getNumber());
+
+        String json = JSON.toJSONString(map);
+        webSocketServer.sendToAllClient(json);
+    }
 }
