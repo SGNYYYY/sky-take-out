@@ -33,6 +33,13 @@ public interface OrderMapper {
     Orders getById(Long id);
 
     /**
+     * 根据订单号查询订单
+     * @param orderNumber
+     */
+    @Select("select * from orders where number = #{orderNumber}")
+    Orders getByNumber(String orderNumber);
+
+    /**
      * 修改订单
      * @param order
      */
