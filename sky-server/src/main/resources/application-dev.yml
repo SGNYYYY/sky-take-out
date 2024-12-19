@@ -5,21 +5,21 @@ sky:
     port: 3306
     database: sky_take_out
     username: root
-    password: sgny0128@
+    password: password
   alioss:
     endpoint: oss-cn-guangzhou.aliyuncs.com
-    access-key-id: LTAI5tF8g8VTyWdXRj7X9nfE
-    access-key-secret: qFfiGOg8LP1FZ52ADpPGT89x3l7F1h
-    bucket-name: shgny
+    access-key-id: access-key-id
+    access-key-secret: access-key-secret
+    bucket-name: bucket-name
   redis:
     host: localhost
     port: 6379
-    password: sgny0128@
+    password: password
     database: 0
   wechat:
-    appid: wx601135b68bc0c406
-    secret: 321104ace7f74dce6a8258c1636a3ed4
+    appid: appid
+    secret: secret
   baidu:
-    AK: rq2E54N6c2neLOI7YMSvqkkgAAWVRF4U
+    AK: AK
   shop:
     address: 北京市海淀区上地十街10号
